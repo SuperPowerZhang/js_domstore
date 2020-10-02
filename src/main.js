@@ -19,6 +19,8 @@ dom.empty(empty)
 
 dom.attr(attr, "test", "1234")
 
+dom.attr(attr, { "fontSize": "22px" })
+
 console.log(dom.attr(attr, "index"))
 
 console.log(dom.attr(attr, "test"))
@@ -27,9 +29,11 @@ console.log(dom.text(text, "6677"))
 
 // dom.attr(attr, "xxyy")
 
-console.log(dom.html(html))
+console.log(dom.html(html2))
 //text只展示给用户看的部分
-console.log(dom.text(html))
+console.log(dom.text(html2))
+
+dom.html(html2, "<p>修改了html</p>")
 
 dom.style(style, { backgroundColor: "red" })
 

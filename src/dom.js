@@ -32,6 +32,7 @@ window.dom = {
         dom.before(child, parent)
         dom.child(parent, child)
     },
+    //node.parentNode.removeChild(node)
     remove(node) {
         node.remove()
         return node
@@ -41,7 +42,7 @@ window.dom = {
         let childrenList = node.childNodes
         let arr = []
         let nodeNext = childrenList[0]
-        //这里用i++不行，因为length在动态变化
+        //这里用i++不行，因为length在动态变化。还可以一直用node.firstChild来获取第一个
         while (nodeNext) {
             let nodeNow = nodeNext
             nodeNext = nodeNow.nextSibling
@@ -50,11 +51,15 @@ window.dom = {
         return arr
     },
     attr(node, title, value) {
-        if (arguments.length === 2) {
+        if (arguments.length === 2 && typeof title === "string") {
             return node.getAttribute(title) ?
                 node.getAttribute(title) : alert("没有这个属性啊")
         } else if (arguments.length === 3) {
             node.setAttribute(title, value)
+        } else if (title instanceof Object) {
+            for (let key in title) {
+                node.style[key] = title[key]
+            }
         }
     },
     text(node, string) {
@@ -74,7 +79,9 @@ window.dom = {
     },
     html(node, html) {
         if (arguments.length === 1) {
-            return node.innerHTML;
+            return node.innerHTML
+        } else if (arguments.length === 2) {
+            node.innerHTML = html
         }
     },
     style(node, style) {
@@ -101,11 +108,10 @@ window.dom = {
     },
     //移除了action上挂载的所有事件
     off(node, action, fn) {
-        console.log("移除事件了吗")
         node.removeEventListener(action, fn)
     },
-    find(selector) {
-        return Array.from(document.querySelectorAll(selector))
+    find(selector, scope) {
+        return Array.from((scope || document).querySelectorAll(selector))
     },
     parent(node) {
         return node.parentNode
@@ -131,7 +137,7 @@ window.dom = {
     },
     each(nodes, fn) {
         for (let i = 0; i < nodes.length; i++) {
-            fn(nodes[i])
+            fn.call(null, nodes[i])
         }
     },
     //i就是下标，从0开始排序的
