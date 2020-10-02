@@ -1,0 +1,20 @@
+section {
+    border: 1px solid red;
+}
+
+.blue {
+    width: 100px;
+    height: 100px;
+    background-color: hsl(0, 0%, 80%);
+    border: 1px solid red;
+}
+
+#off {
+    width: 100px;
+    height: 100px;
+    border: 1px solid green;
+}
+
+.off:mouseover {
+    border: 2px solid red;
+}
